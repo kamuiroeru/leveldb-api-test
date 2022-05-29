@@ -73,3 +73,5 @@ app.get('/pc', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Start on port ${PORT}.`)
 })
+
+export default app

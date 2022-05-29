@@ -4,3 +4,6 @@ dist
 
 # key-value-store
 .leveldb
+
+# test coverage
+coverage

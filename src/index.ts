@@ -59,18 +59,15 @@ app.get('/pc/:id', async (req, res, next) => {
   const id = req.params.id
   try {
     const requestQuotation = await db.get(id)
-    res.sendStatus(200).send(requestQuotation)
+    res.status(200).send(requestQuotation)
   } catch (e) {
     res.sendStatus(404)
   }
 })
 
 app.get('/pc', async (req, res) => {
-  const requestQuotation: Quotation = req.body
-  const uuid = generateUuid()
-  requestQuotation.id = uuid;
-  await db.put(uuid, requestQuotation)
-  res.sendStatus(200)
+  const l = await db.all()
+  res.status(200).json(l)
 })
 
 app.listen(PORT, () => {

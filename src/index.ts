@@ -2,16 +2,17 @@ import express from 'express'
 import level from 'level-ts'
 
 import { generateUuid } from './modules/uuid'
-import type { Component, Quotation } from './model/models'
+import type { Quotation } from './model/models'
+import { PcService, PcServiceImpl } from './service'
+import { LevelDb, LevelDbImpl } from './repository'
 
-const db = new level<Quotation>(`${process.cwd()}/.leveldb`)
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = 8888
 
-// CROS対応（というか完全無防備：本番環境ではだめ絶対）
+// CORS対応（というか完全無防備：本番環境ではだめ絶対）
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "*")
@@ -19,16 +20,27 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   next();
 })
 
+const repository: LevelDb = new LevelDbImpl(
+  new level<Quotation>(`${process.cwd()}/.leveldb`)
+)
+export const pcService: PcService = new PcServiceImpl(repository)
+
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 'ok'
   })
 })
 
+app.get('/uuid', (req, res) => {
+  res.status(200).json({
+    v4: generateUuid()
+  })
+})
+
 app.post('/gen-mock', async (req, res) => {
-  const id = generateUuid();
+  const now = new Date().toISOString()
   const requestQuotation: Quotation = {
-    id,
+    id: '[[toBeReplaced]]',
     cpu: {
       id: generateUuid(),
       name: 'Intel Core i9-12900K',
@@ -40,25 +52,24 @@ app.post('/gen-mock', async (req, res) => {
     totalPrice: 75980,
     totalWatts: 150,
     text: '',
+    createdAt: now,
+    updatedAt: now
   }
 
-  console.log({ requestQuotation })
-  await db.put(id, requestQuotation)
-  res.sendStatus(200)
+  const id = await pcService.post(requestQuotation)
+  res.status(200).send({ id })
 })
 
 app.post('/pc', async (req, res) => {
   const requestQuotation: Quotation = req.body
-  const uuid = generateUuid()
-  requestQuotation.id = uuid;
-  await db.put(uuid, requestQuotation)
-  res.sendStatus(200)
+  const id = await pcService.post(requestQuotation)
+  res.status(200).send({ id })
 })
 
-app.get('/pc/:id', async (req, res, next) => {
+app.get('/pc/:id', async (req, res) => {
   const id = req.params.id
   try {
-    const requestQuotation = await db.get(id)
+    const requestQuotation = await pcService.get(id)
     res.status(200).send(requestQuotation)
   } catch (e) {
     res.sendStatus(404)
@@ -66,12 +77,14 @@ app.get('/pc/:id', async (req, res, next) => {
 })
 
 app.get('/pc', async (req, res) => {
-  const l = await db.all()
-  res.status(200).json(l)
+  res.status(200).json({
+    'quotations': await pcService.all()
+  })
 })
 
 app.listen(PORT, () => {
   console.log(`Start on port ${PORT}.`)
 })
 
+// 単体テスト用に export する
 export default app

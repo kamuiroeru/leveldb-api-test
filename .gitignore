@@ -3,7 +3,7 @@ dist
 .DS_Store
 
 # key-value-store
-.leveldb
+.leveldb*
 
 # test coverage
 coverage

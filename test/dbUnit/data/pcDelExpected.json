@@ -1,0 +1,18 @@
+[
+  {
+    "id": "e8527e04-9bb7-407e-94c6-c71844141b4e",
+    "cpu": {
+      "id": "7da9bc8f-d4ac-43bd-b38f-dfcc3fe63db4",
+      "name": "Intel Core i9-12900K",
+      "url": "https://www.dospara.co.jp/5shopping/detail_parts.php?bg=1&br=11&sbr=1329&ic=475986&utm_source=kakaku.com&utm_medium=referral&utm_campaign=kakaku_parts_camp&_bdadid=JPGTE5.00002isv&lf=0",
+      "price": 75980,
+      "shop": "ドスパラ",
+      "watts": null
+    },
+    "totalPrice": 75980,
+    "totalWatts": 150,
+    "text": "",
+    "createdAt": "2022-06-05T13:34:07.700Z",
+    "updatedAt": "2022-06-05T13:34:07.700Z"
+  }
+]

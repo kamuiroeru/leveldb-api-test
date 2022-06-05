@@ -1,0 +1,74 @@
+[
+  {
+    "id": "0e9df247-1ae2-45e0-97e4-d8555a596bdd",
+    "cpu": {
+      "id": "e61ab090-f89c-4918-baee-f6b02b168e81",
+      "name": "Intel Core i9-12900K",
+      "url": "https://www.dospara.co.jp/5shopping/detail_parts.php?bg=1&br=11&sbr=1329&ic=475986&utm_source=kakaku.com&utm_medium=referral&utm_campaign=kakaku_parts_camp&_bdadid=JPGTE5.00002isv&lf=0",
+      "price": 75980,
+      "shop": "ドスパラ",
+      "watts": null
+    },
+    "totalPrice": 75980,
+    "totalWatts": 150,
+    "text": "",
+    "createdAt": "2022-06-05T13:34:09.319Z",
+    "updatedAt": "2022-06-05T13:34:09.319Z"
+  },
+  {
+    "id": "38a19f87-6e37-4a6a-89d1-941f89521a35",
+    "cpu": {
+      "id": "0398e9f5-fdfe-4e51-b8a4-bbc10bf4760a",
+      "name": "Intel Core i9-12900K",
+      "url": "https://www.dospara.co.jp/5shopping/detail_parts.php?bg=1&br=11&sbr=1329&ic=475986&utm_source=kakaku.com&utm_medium=referral&utm_campaign=kakaku_parts_camp&_bdadid=JPGTE5.00002isv&lf=0",
+      "price": 75980,
+      "shop": "ドスパラ",
+      "watts": null
+    },
+    "totalPrice": 75980,
+    "totalWatts": 150,
+    "text": "",
+    "createdAt": "2022-06-05T13:34:08.628Z",
+    "updatedAt": "2022-06-05T13:34:08.628Z"
+  },
+  {
+    "id": "96d5885e-bc1a-4452-9a8f-dc81512c202b",
+    "cpu": {
+      "id": "5c67c249-9692-4cc8-bae8-42568352a9e4",
+      "name": "Intel Core i9-12900K",
+      "url": "https://www.dospara.co.jp/5shopping/detail_parts.php?bg=1&br=11&sbr=1329&ic=475986&utm_source=kakaku.com&utm_medium=referral&utm_campaign=kakaku_parts_camp&_bdadid=JPGTE5.00002isv&lf=0",
+      "price": 75980,
+      "shop": "ドスパラ",
+      "watts": null
+    },
+    "totalPrice": 75980,
+    "totalWatts": 150,
+    "text": "",
+    "createdAt": "2022-06-05T13:34:09.618Z",
+    "updatedAt": "2022-06-05T13:34:09.618Z"
+  },
+  {
+    "id": "ab06e9a0-5c1b-480f-893b-45b3f4a76d82",
+    "cpu": {
+      "id": "69bfa31b-5d0d-485a-884f-17f2f8ecd1c8",
+      "name": "Intel Core i9-12900K",
+      "url": "https://www.dospara.co.jp/5shopping/detail_parts.php?bg=1&br=11&sbr=1329&ic=475986&utm_source=kakaku.com&utm_medium=referral&utm_campaign=kakaku_parts_camp&_bdadid=JPGTE5.00002isv&lf=0",
+      "price": 75980,
+      "shop": "ドスパラ",
+      "watts": null
+    },
+    "totalPrice": 75980,
+    "totalWatts": 150,
+    "text": "",
+    "createdAt": "2022-06-05T13:34:09.879Z",
+    "updatedAt": "2022-06-05T13:34:09.879Z"
+  },
+  {
+    "id": "e8527e04-9bb7-407e-94c6-c71844141b4e",
+    "totalPrice": 0,
+    "totalWatts": 1,
+    "text": "updated",
+    "createdAt": "2022-06-05T13:34:07.700Z",
+    "updatedAt": "2022-06-05T12:34:56.789Z"
+  }
+]

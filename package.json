@@ -23,7 +23,8 @@
     "?test-watch": "echo 'ユニットテストを監視実行する'",
     "test-watch": "jest --coverage --watch",
     "?build": "echo 'TypeScript をトランスパイルする・設定は ./tsconfig.json を参照'",
-    "build": "tsc"
+    "build": "tsc",
+    "test:coverage": "npm run test -- --coverage --silent --testLocationInResults --ci --json --outputFile=\"report.json\""
   },
   "author": "",
   "license": "MIT",

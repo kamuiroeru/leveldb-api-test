@@ -1,5 +1,5 @@
 import supertest from 'supertest'
-import app from '../src/index'
+import app from '../src/router'
 import * as myUuid from '../src/modules/uuid'
 
 describe('サーバのテスト', () => {

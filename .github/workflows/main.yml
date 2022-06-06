@@ -34,7 +34,7 @@ jobs:
           name: coverage
           path: coverage
       - name: Show coverage in comments
-        uses: ziishaned/jest-reporter-action@0.1.1
+        uses: ChristiaanScheermeijer/jest-reporter-action@0.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-command: 'npx jest --coverage'

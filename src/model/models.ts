@@ -24,6 +24,6 @@ export type Quotation = {
   totalPrice: number
   totalWatts: number
   text: string
-  createdAt?: string  // iso string
-  updatedAt?: string  // iso string
+  createdAt?: string // iso string
+  updatedAt?: string // iso string
 }

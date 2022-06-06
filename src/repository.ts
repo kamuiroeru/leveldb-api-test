@@ -1,9 +1,9 @@
-import level from 'level-ts'
-import { Quotation } from "./model/models";
-import { nowIsoString } from './modules/dateTime';
+import Level from 'level-ts'
+import { Quotation } from './model/models'
+import { nowIsoString } from './modules/dateTime'
 
 export interface LevelDb {
-  db: level<Quotation>
+  db: Level<Quotation>
   all(): Promise<Quotation[]>
   get(id: string): Promise<Quotation>
   put(uuid: string, quotation: Quotation): Promise<void>
@@ -13,9 +13,9 @@ export interface LevelDb {
 
 export class LevelDbImpl implements LevelDb {
   // db = new level<Quotation>(`${process.cwd()}/.leveldb`)
-  db: level<Quotation>
+  db: Level<Quotation>
 
-  constructor (db: level<Quotation>) {
+  constructor(db: Level<Quotation>) {
     this.db = db
   }
 

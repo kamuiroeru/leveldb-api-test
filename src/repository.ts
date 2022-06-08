@@ -28,8 +28,9 @@ export class LevelDbImpl implements LevelDb {
   }
 
   async put(uuid: string, quotation: Quotation): Promise<void> {
-    quotation.updatedAt = nowIsoString()
-    await this.db.put(uuid, quotation)
+    const copied: Quotation = JSON.parse(JSON.stringify(quotation))
+    copied.updatedAt = nowIsoString()
+    await this.db.put(uuid, copied)
   }
 
   async del(uuid: string): Promise<void> {

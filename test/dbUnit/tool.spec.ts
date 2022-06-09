@@ -2,7 +2,8 @@ import Level from 'level-ts'
 import FsPromises from 'node:fs/promises'
 import * as tool from './tool'
 
-jest.mock('Level') // モジュールルートで実施する必要がある
+// 参考: https://jestjs.io/docs/es6-class-mocks#automatic-mock
+jest.mock('level-ts') // モジュールルートで実施する必要がある
 
 describe('tool.tsのテスト', () => {
   it('dumpDbToJson のテスト', async () => {

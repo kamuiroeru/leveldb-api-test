@@ -5,7 +5,8 @@ import { testQuotation } from './modelTools'
 import * as dateTime from "../src/modules/dateTime"
 
 // モック化した db を作って repository を作成する
-jest.mock('Level')
+// 参考: https://jestjs.io/docs/es6-class-mocks#automatic-mock
+jest.mock('level-ts') // モジュールルートで実施する必要がある
 const db = new Level('')
 const repository = new LevelDbImpl(db)
 

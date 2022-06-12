@@ -1,8 +1,8 @@
-import level from "level-ts"
-import { LevelDb, LevelDbImpl } from "../../src/repository"
-import { rm } from "node:fs/promises"
+import level from 'level-ts'
+import { LevelDb, LevelDbImpl } from '../../src/repository'
+import { rm } from 'node:fs/promises'
 import { drop, loadJsonToDb, loadJson } from './tool'
-import * as dateTime from "../../src/modules/dateTime"
+import * as dateTime from '../../src/modules/dateTime'
 
 const testLevelDbDir = `${process.cwd()}/.leveldb-test`
 const db = new level(testLevelDbDir)
@@ -21,25 +21,30 @@ describe('repositoryのdbUnitTest', () => {
   })
 
   describe('正常系', () => {
-
     it('allチェック', async () => {
       const quotations = await repository.all()
       // console.log('ids:\n', quotations.map(q => q.id).join('\n'))
       expect(quotations.length).toBe(5)
-      expect(quotations).toEqual(await loadJson(`${__dirname}/data/pcInit.json`))
+      expect(quotations).toEqual(
+        await loadJson(`${__dirname}/data/pcInit.json`)
+      )
     })
 
     it('GETチェック', async () => {
       const id = 'e8527e04-9bb7-407e-94c6-c71844141b4e'
       const quotation = await repository.get(id)
-      const expectedQuotation = (await loadJson(`${__dirname}/data/pcInit.json`)).slice(-1)[0]
+      const expectedQuotation = (
+        await loadJson(`${__dirname}/data/pcInit.json`)
+      ).slice(-1)[0]
       expect(quotation.id).toBe(id)
       expect(quotation).toEqual(expectedQuotation)
     })
 
     it('PUTチェック', async () => {
       // nowIsoString をモックする
-      const spy = jest.spyOn(dateTime, 'nowIsoString').mockReturnValue('2022-06-05T12:34:56.789Z')
+      const spy = jest
+        .spyOn(dateTime, 'nowIsoString')
+        .mockReturnValue('2022-06-05T12:34:56.789Z')
       // 更新する Quotation を用意する
       const id = 'e8527e04-9bb7-407e-94c6-c71844141b4e'
       const quotation = await repository.get(id)
@@ -95,7 +100,9 @@ describe('repositoryのdbUnitTest', () => {
     it('存在しない UUID を GET', () => {
       const id = 'invalid-key'
       // async 関数は await せずに .rejects をつけてチェックする
-      expect(() => repository.get(id)).rejects.toThrow('Key not found in database [invalid-key]')
+      expect(() => repository.get(id)).rejects.toThrow(
+        'Key not found in database [invalid-key]'
+      )
     })
   })
 

@@ -11,7 +11,9 @@ describe('tool.tsのテスト', () => {
     // モックの設定
     const db = new Level('')
     const mockDbAll = jest.spyOn(db, 'all').mockImplementation(async () => [])
-    const mockWriteFile = jest.spyOn(FsPromises, 'writeFile').mockImplementation(async (outPath, db) => { })
+    const mockWriteFile = jest
+      .spyOn(FsPromises, 'writeFile')
+      .mockImplementation(async (outPath, db) => {})
     // 実行
     const outPath = '/path/to/output.json'
     await tool.dumpDbToJson(outPath, db)

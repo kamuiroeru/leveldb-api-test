@@ -1,6 +1,6 @@
-import level from "level-ts"
-import { readFile, writeFile } from "node:fs/promises"
-import { Quotation } from "../../src/model/models"
+import level from 'level-ts'
+import { readFile, writeFile } from 'node:fs/promises'
+import { Quotation } from '../../src/model/models'
 
 export const drop = async (db: level) => {
   const records: Quotation[] = await db.all()

@@ -18,13 +18,14 @@ describe('repositoryのunitTest', () => {
   const mockDbGet = jest.spyOn(db, 'get')
   const mockDbPut = jest.spyOn(db, 'put')
   const mockDbDel = jest.spyOn(db, 'del')
+  const mockDbExists = jest.spyOn(db, 'exists')
   // その他のモック
   const dateTimeMock = jest.spyOn(dateTime, 'nowIsoString')
 
   afterEach(() => {
     // 各 it で モックをリセットする
     [
-      mockDbAll, mockDbGet, mockDbPut, mockDbDel,
+      mockDbAll, mockDbGet, mockDbPut, mockDbDel, mockDbExists,
       dateTimeMock,
     ].map(m => m.mockClear())
   })
@@ -85,11 +86,11 @@ describe('repositoryのunitTest', () => {
     it('existsチェック', async () => {
       // db.exists をモック化する
       const expectedId = 'id'
-      const mockDbDel = jest.spyOn(db, 'exists').mockImplementation(async (uuid: string) => uuid === expectedId)
+      mockDbExists.mockImplementation(async (uuid: string) => uuid === expectedId)
       // テスト対象を実行
       const result = await repository.exists(expectedId)
       // 返り値や呼び出し回数のチェック
-      expect(mockDbDel).toBeCalledTimes(1)
+      expect(mockDbExists).toBeCalledTimes(1)
       expect(result).toBe(true)
       // ついでに false も得られるかチェック
       expect(await repository.exists('invalidId')).toBe(false)

@@ -1,24 +1,17 @@
-import Level from 'level-ts'
 import { NotFoundError } from 'level-errors'
 import { Quotation } from '../src/model/models'
-import { LevelDbImpl } from '../src/repository'
 import { testQuotation } from './modelTools'
+import { mockDb, mockRepo as repository } from './mocks'
 import * as dateTime from '../src/modules/dateTime'
-
-// モック化した db を作って repository を作成する
-// 参考: https://jestjs.io/docs/es6-class-mocks#automatic-mock
-jest.mock('level-ts') // モジュールルートで実施する必要がある
-const db = new Level('')
-const repository = new LevelDbImpl(db)
 
 describe('repositoryのunitTest', () => {
   // モックを設定する
   // // db のメソッドモックを設定する
-  const mockDbAll = jest.spyOn(db, 'all')
-  const mockDbGet = jest.spyOn(db, 'get')
-  const mockDbPut = jest.spyOn(db, 'put')
-  const mockDbDel = jest.spyOn(db, 'del')
-  const mockDbExists = jest.spyOn(db, 'exists')
+  const mockDbAll = jest.spyOn(mockDb, 'all')
+  const mockDbGet = jest.spyOn(mockDb, 'get')
+  const mockDbPut = jest.spyOn(mockDb, 'put')
+  const mockDbDel = jest.spyOn(mockDb, 'del')
+  const mockDbExists = jest.spyOn(mockDb, 'exists')
   // その他のモック
   const dateTimeMock = jest.spyOn(dateTime, 'nowIsoString')
 

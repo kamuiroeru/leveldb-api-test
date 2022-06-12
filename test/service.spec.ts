@@ -4,7 +4,7 @@ import { Quotation } from '../src/model/models'
 import { LevelDbImpl } from '../src/repository'
 import { PcServiceImpl } from '../src/service'
 import { testQuotation } from './modelTools'
-import * as dateTime from "../src/modules/dateTime"
+import * as dateTime from '../src/modules/dateTime'
 import * as myUuid from '../src/modules/uuid'
 
 // モック化した db を作って repository を作成する
@@ -28,10 +28,15 @@ describe('serviceのunitTest', () => {
 
   afterEach(() => {
     // 各 it で モックをリセットする
-    [
-      mockRepoAll, mockRepoGet, mockRepoPut, mockRepoDel, mockRepoExists,
-      dateTimeMock, mockGenerateUuid
-    ].map(m => m.mockClear())
+    ;[
+      mockRepoAll,
+      mockRepoGet,
+      mockRepoPut,
+      mockRepoDel,
+      mockRepoExists,
+      dateTimeMock,
+      mockGenerateUuid,
+    ].map((m) => m.mockClear())
   })
 
   describe('正常系', () => {
@@ -67,9 +72,21 @@ describe('serviceのunitTest', () => {
         .mockReturnValueOnce('uuid2') // 2回目の返り値
         .mockReturnValue('uuidN') // 3回目以降の返り値
       mockRepoExists
-        .mockReturnValueOnce(new Promise(res => { res(false) })) // 1回目 衝突
-        .mockReturnValueOnce(new Promise(res => { res(false) })) // 2回目 衝突
-        .mockReturnValue(new Promise(res => { res(true) })) // 3回目以降は衝突しない
+        .mockReturnValueOnce(
+          new Promise((res) => {
+            res(false)
+          })
+        ) // 1回目 衝突
+        .mockReturnValueOnce(
+          new Promise((res) => {
+            res(false)
+          })
+        ) // 2回目 衝突
+        .mockReturnValue(
+          new Promise((res) => {
+            res(true)
+          })
+        ) // 3回目以降は衝突しない
       // テスト対象を実行
       const input = testQuotation()
       const result = await service.post(input)
@@ -77,7 +94,11 @@ describe('serviceのunitTest', () => {
       expect(result).toBe('uuidN')
       expect(mockGenerateUuid).toBeCalledTimes(3)
       // // repository.exists が、['uuid1'], ['uuid2'], ['uuidN'] の引数の順に 3回呼ばれたことを確認
-      expect(mockRepoExists.mock.calls).toEqual([['uuid1'], ['uuid2'], ['uuidN']])
+      expect(mockRepoExists.mock.calls).toEqual([
+        ['uuid1'],
+        ['uuid2'],
+        ['uuidN'],
+      ])
       const copied: Quotation = JSON.parse(JSON.stringify(input))
       copied.id = 'uuidN' // 衝突しない UUID が指定されて repository.put されているはず
       expect(mockRepoPut).toBeCalledWith('uuidN', copied)
@@ -85,7 +106,7 @@ describe('serviceのunitTest', () => {
 
     it('putチェック', async () => {
       // repository.put の挙動を指定
-      mockRepoPut.mockImplementation(async (uuid, quotation) => { })
+      mockRepoPut.mockImplementation(async (uuid, quotation) => {})
       // テスト対象を実行
       const quotation = testQuotation()
       await service.put(quotation.id, quotation)
@@ -97,7 +118,9 @@ describe('serviceのunitTest', () => {
 
   describe('異常系', () => {
     it('存在しない項目をgetする', () => {
-      mockRepoGet.mockImplementation(async (id: string) => { throw new NotFoundError() })
+      mockRepoGet.mockImplementation(async (id: string) => {
+        throw new NotFoundError()
+      })
       const invalidId = 'hoge'
       // repository の get を呼ぶと NotFoundError になる
       expect(service.get(invalidId)).rejects.toThrow(NotFoundError)

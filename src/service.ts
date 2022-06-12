@@ -2,7 +2,6 @@ import { Quotation } from './model/models'
 import { generateUuid } from './modules/uuid'
 import { LevelDb } from './repository'
 
-
 export interface PcService {
   repository: LevelDb
   all(): Promise<Quotation[]>
@@ -10,7 +9,6 @@ export interface PcService {
   post(quotation: Quotation): Promise<string>
   put: (uuid: string, quotation: Quotation) => Promise<string>
 }
-
 
 export class PcServiceImpl implements PcService {
   repository: LevelDb

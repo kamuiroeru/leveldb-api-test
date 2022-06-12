@@ -11,15 +11,17 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // CORS対応（というか完全無防備：本番環境ではだめ絶対）
-app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Methods', '*')
-  res.header('Access-Control-Allow-Headers', '*')
-  next()
-})
+app.use(
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', '*')
+    res.header('Access-Control-Allow-Headers', '*')
+    next()
+  }
+)
 
 const repository: LevelDb = new LevelDbImpl(
-  new Level<Quotation>(`${process.cwd()}/.leveldb`),
+  new Level<Quotation>(`${process.cwd()}/.leveldb`)
 )
 export const pcService: PcService = new PcServiceImpl(repository)
 
@@ -76,10 +78,9 @@ app.get('/pc/:id', async (req, res) => {
 
 app.get('/pc', async (req, res) => {
   res.status(200).json({
-    'quotations': await pcService.all(),
+    quotations: await pcService.all(),
   })
 })
-
 
 // 単体テスト用に export する
 export default app

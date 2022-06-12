@@ -11,7 +11,9 @@ describe('サーバのテスト', () => {
 
   it('Path [/uuid] のテスト', async () => {
     //
-    const spy = jest.spyOn(myUuid, 'generateUuid').mockReturnValue('generatedUUID')
+    const spy = jest
+      .spyOn(myUuid, 'generateUuid')
+      .mockReturnValue('generatedUUID')
     const res = await supertest(app).get('/uuid')
     expect(res.statusCode).toBe(200)
     expect(res.body.v4).toBe('generatedUUID')

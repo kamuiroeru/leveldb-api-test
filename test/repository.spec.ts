@@ -3,7 +3,7 @@ import { NotFoundError } from 'level-errors'
 import { Quotation } from '../src/model/models'
 import { LevelDbImpl } from '../src/repository'
 import { testQuotation } from './modelTools'
-import * as dateTime from "../src/modules/dateTime"
+import * as dateTime from '../src/modules/dateTime'
 
 // モック化した db を作って repository を作成する
 // 参考: https://jestjs.io/docs/es6-class-mocks#automatic-mock
@@ -24,10 +24,14 @@ describe('repositoryのunitTest', () => {
 
   afterEach(() => {
     // 各 it で モックをリセットする
-    [
-      mockDbAll, mockDbGet, mockDbPut, mockDbDel, mockDbExists,
+    ;[
+      mockDbAll,
+      mockDbGet,
+      mockDbPut,
+      mockDbDel,
+      mockDbExists,
       dateTimeMock,
-    ].map(m => m.mockClear())
+    ].map((m) => m.mockClear())
   })
 
   describe('正常系', () => {
@@ -58,7 +62,7 @@ describe('repositoryのunitTest', () => {
     it('putチェック', async () => {
       // db.put と nowIsoString の挙動を指定
       const frozenTime = '2022-06-05T12:34:56.789Z'
-      mockDbPut.mockImplementation(async (uuid: string, q: Quotation) => { })
+      mockDbPut.mockImplementation(async (uuid: string, q: Quotation) => {})
       dateTimeMock.mockReturnValue(frozenTime)
       const expected = testQuotation()
       expected.updatedAt = frozenTime
@@ -74,7 +78,7 @@ describe('repositoryのunitTest', () => {
 
     it('delチェック', async () => {
       // db.del をモック化する
-      mockDbDel.mockImplementation(async (uuid: string) => { })
+      mockDbDel.mockImplementation(async (uuid: string) => {})
       const expectedId = 'id'
       // テスト対象を実行
       await repository.del(expectedId)
@@ -86,7 +90,9 @@ describe('repositoryのunitTest', () => {
     it('existsチェック', async () => {
       // db.exists をモック化する
       const expectedId = 'id'
-      mockDbExists.mockImplementation(async (uuid: string) => uuid === expectedId)
+      mockDbExists.mockImplementation(
+        async (uuid: string) => uuid === expectedId
+      )
       // テスト対象を実行
       const result = await repository.exists(expectedId)
       // 返り値や呼び出し回数のチェック
@@ -99,7 +105,9 @@ describe('repositoryのunitTest', () => {
 
   describe('異常系', () => {
     it('存在しない項目をgetする', () => {
-      mockDbGet.mockImplementation(async (id: string) => { throw new NotFoundError() })
+      mockDbGet.mockImplementation(async (id: string) => {
+        throw new NotFoundError()
+      })
       const invalidId = 'hoge'
       // repository の get を呼ぶと NotFoundError になる
       expect(repository.get(invalidId)).rejects.toThrow(NotFoundError)

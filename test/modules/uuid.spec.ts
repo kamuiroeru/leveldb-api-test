@@ -5,7 +5,7 @@ const isUuidV4 = (s: string): boolean => {
 }
 
 describe('uuidモジュールのテスト', () => {
-  const args = [...Array(10).keys()].map(i => (' ' + (i + 1)).slice(-2)) // 2桁に揃えた引数
+  const args = [...Array(10).keys()].map((i) => (' ' + (i + 1)).slice(-2)) // 2桁に揃えた引数
   test.each(args)('generateUuidのテスト %s 回目', (_s: string) => {
     expect(isUuidV4(generateUuid())).toBe(true)
   })

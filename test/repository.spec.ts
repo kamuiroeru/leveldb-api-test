@@ -1,4 +1,5 @@
 import Level from 'level-ts'
+import { NotFoundError } from 'level-errors'
 import { Quotation } from '../src/model/models'
 import { LevelDbImpl } from '../src/repository'
 import { testQuotation } from './modelTools'
@@ -92,6 +93,18 @@ describe('repositoryのunitTest', () => {
       expect(result).toBe(true)
       // ついでに false も得られるかチェック
       expect(await repository.exists('invalidId')).toBe(false)
+    })
+  })
+
+  describe('異常系', () => {
+    it('存在しない項目をgetする', () => {
+      mockDbGet.mockImplementation(async (id: string) => { throw new NotFoundError() })
+      const invalidId = 'hoge'
+      // repository の get を呼ぶと NotFoundError になる
+      expect(repository.get(invalidId)).rejects.toThrow(NotFoundError)
+      // 呼び出されたことを確認する
+      expect(mockDbGet).toBeCalledTimes(1)
+      expect(mockDbGet).toBeCalledWith(invalidId)
     })
   })
 })

@@ -11,11 +11,28 @@ const db = new Level('')
 const repository = new LevelDbImpl(db)
 
 describe('repositoryのunitTest', () => {
+  // モックを設定する
+  // // db のメソッドモックを設定する
+  const mockDbAll = jest.spyOn(db, 'all')
+  const mockDbGet = jest.spyOn(db, 'get')
+  const mockDbPut = jest.spyOn(db, 'put')
+  const mockDbDel = jest.spyOn(db, 'del')
+  // その他のモック
+  const dateTimeMock = jest.spyOn(dateTime, 'nowIsoString')
+
+  afterEach(() => {
+    // 各 it で モックをリセットする
+    [
+      mockDbAll, mockDbGet, mockDbPut, mockDbDel,
+      dateTimeMock,
+    ].map(m => m.mockClear())
+  })
+
   describe('正常系', () => {
     it('allチェック', async () => {
-      // db.all をモック化する
+      // db.all の挙動を指定
       const expected = [testQuotation()]
-      const mockDbAll = jest.spyOn(db, 'all').mockImplementation(async () => expected)
+      mockDbAll.mockImplementation(async () => expected)
       // テスト対象を実行
       const result = await repository.all()
       // 返り値や呼び出し回数のチェック
@@ -25,9 +42,9 @@ describe('repositoryのunitTest', () => {
     })
 
     it('getチェック', async () => {
-      // db.get をモック化する
+      // db.get の挙動を指定
       const expected = testQuotation()
-      const mockDbGet = jest.spyOn(db, 'get').mockImplementation(async (id: string) => expected)
+      mockDbGet.mockImplementation(async (id: string) => expected)
       // テスト対象を実行
       const result = await repository.get(expected.id)
       // 返り値や呼び出し回数のチェック
@@ -37,10 +54,10 @@ describe('repositoryのunitTest', () => {
     })
 
     it('putチェック', async () => {
-      // db.put と nowIsoString をモック化する
+      // db.put と nowIsoString の挙動を指定
       const frozenTime = '2022-06-05T12:34:56.789Z'
-      const mockDbPut = jest.spyOn(db, 'put').mockImplementation(async (uuid: string, q: Quotation) => { })
-      const dateTimeMock = jest.spyOn(dateTime, 'nowIsoString').mockReturnValue(frozenTime)
+      mockDbPut.mockImplementation(async (uuid: string, q: Quotation) => { })
+      dateTimeMock.mockReturnValue(frozenTime)
       const expected = testQuotation()
       expected.updatedAt = frozenTime
       // テスト対象を実行
@@ -55,7 +72,7 @@ describe('repositoryのunitTest', () => {
 
     it('delチェック', async () => {
       // db.del をモック化する
-      const mockDbDel = jest.spyOn(db, 'del').mockImplementation(async (uuid: string) => { })
+      mockDbDel.mockImplementation(async (uuid: string) => { })
       const expectedId = 'id'
       // テスト対象を実行
       await repository.del(expectedId)

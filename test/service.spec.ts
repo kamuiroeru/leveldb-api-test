@@ -65,17 +65,17 @@ describe('serviceのunitTest', () => {
       mockRepoExists
         .mockReturnValueOnce(
           new Promise((res) => {
-            res(false)
+            res(true)
           })
         ) // 1回目 衝突
         .mockReturnValueOnce(
           new Promise((res) => {
-            res(false)
+            res(true)
           })
         ) // 2回目 衝突
         .mockReturnValue(
           new Promise((res) => {
-            res(true)
+            res(false)
           })
         ) // 3回目以降は衝突しない
       // テスト対象を実行

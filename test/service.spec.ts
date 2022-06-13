@@ -14,7 +14,7 @@ describe('serviceのunitTest', () => {
   const mockRepoDel = jest.spyOn(mockRepo, 'del')
   const mockRepoExists = jest.spyOn(mockRepo, 'exists')
   // その他のモック
-  const dateTimeMock = jest.spyOn(dateTime, 'nowIsoString')
+  const mockDateTime = jest.spyOn(dateTime, 'nowIsoString')
   const mockGenerateUuid = jest.spyOn(myUuid, 'generateUuid')
 
   afterEach(() => {
@@ -25,7 +25,7 @@ describe('serviceのunitTest', () => {
       mockRepoPut,
       mockRepoDel,
       mockRepoExists,
-      dateTimeMock,
+      mockDateTime,
       mockGenerateUuid,
     ].map((m) => m.mockClear())
   })
@@ -65,19 +65,21 @@ describe('serviceのunitTest', () => {
       mockRepoExists
         .mockReturnValueOnce(
           new Promise((res) => {
-            res(true)
+            res(true) // 1回目 衝突
           })
-        ) // 1回目 衝突
+        )
         .mockReturnValueOnce(
           new Promise((res) => {
-            res(true)
+            res(true) // 2回目 衝突
           })
-        ) // 2回目 衝突
+        )
         .mockReturnValue(
           new Promise((res) => {
-            res(false)
+            res(false) // 3回目以降は衝突しない
           })
-        ) // 3回目以降は衝突しない
+        )
+      mockDateTime.mockReturnValue('2022-06-05T12:34:56.789Z')
+      mockRepoPut.mockImplementation(async (uuid, quotation) => {})
       // テスト対象を実行
       const input = testQuotation()
       const result = await service.post(input)
@@ -90,8 +92,10 @@ describe('serviceのunitTest', () => {
         ['uuid2'],
         ['uuidN'],
       ])
+      expect(mockDateTime).toBeCalledTimes(1)
       const copied: Quotation = JSON.parse(JSON.stringify(input))
       copied.id = 'uuidN' // 衝突しない UUID が指定されて repository.put されているはず
+      copied.createdAt = '2022-06-05T12:34:56.789Z'
       expect(mockRepoPut).toBeCalledWith('uuidN', copied)
     })
 

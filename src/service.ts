@@ -1,4 +1,5 @@
 import { Quotation } from './model/models'
+import { nowIsoString } from './modules/dateTime'
 import { generateUuid } from './modules/uuid'
 import { LevelDb } from './repository'
 
@@ -33,6 +34,7 @@ export class PcServiceImpl implements PcService {
     } while (await this.repository.exists(uuid))
     const copied: Quotation = JSON.parse(JSON.stringify(quotation))
     copied.id = uuid // id を付与する
+    copied.createdAt = nowIsoString()
     await this.repository.put(uuid, copied)
     return uuid
   }

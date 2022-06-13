@@ -27,5 +27,5 @@ typescript で [leveldb](https://github.com/google/leveldb/blob/main/doc/index.m
 
 - [x] DI を用いてテストコードを書く。
 - [x] Github Actions を使ってプルリク時にテストが動くようにする。
-- [ ] jest の coverage を 100% にする。
+- [x] jest の coverage を 100% にする。
 - [ ] Nest.js が いい感じに MVC できるみたいなので、移行してみたい。

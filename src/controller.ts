@@ -1,9 +1,7 @@
 import express from 'express'
-import Level from 'level-ts'
-
 import { generateUuid } from './modules/uuid'
 import { Quotation, quotationGenerator } from './model/models'
-import { PcService, PcServiceImpl } from './service'
+import { PcService } from './service'
 import { nowIsoString } from './modules/dateTime'
 import { ErrorResponse } from './model/responses'
 

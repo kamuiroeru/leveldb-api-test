@@ -30,7 +30,8 @@ export class PcServiceImpl implements PcService {
     let uuid = ''
     do {
       uuid = generateUuid()
-    } while (!(await this.repository.exists(uuid)))
+      console.log({ uuid })
+    } while (await this.repository.exists(uuid))
     const copied: Quotation = JSON.parse(JSON.stringify(quotation))
     copied.id = uuid // id を付与する
     await this.repository.put(uuid, copied)
